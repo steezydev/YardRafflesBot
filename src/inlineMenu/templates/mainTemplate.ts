@@ -1,6 +1,6 @@
 import { MenuTemplate } from 'telegraf-inline-menu'
 import { Context } from 'telegraf'
-import { template } from '../../../utils/templater/templater'
+import { template } from '../../utils/templater/templater'
 
 import { rafflesTemplate } from './rafflesTemplate'
 import { profileTemplate } from './profileTemplate'

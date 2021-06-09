@@ -4,10 +4,8 @@ process.setMaxListeners(0);
 import { Composer, Markup, Scenes, Context, Telegraf } from 'telegraf'
 import {MenuTemplate, MenuMiddleware} from 'telegraf-inline-menu'
 import { template } from './utils/templater/templater'
-
-import { keyboard, keyboardButtons } from './keyboard/simpleMenu/keyboard'
-
-import { menuMiddleware } from './keyboard/inlineMenu/inlineMenu'
+import { keyboard, keyboardButtons } from './keyboard/keyboard'
+import { menuMiddleware } from './inlineMenu/inlineMenu'
 
 const token = process.env.BOT_TOKEN
 if (token === undefined) {

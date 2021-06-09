@@ -1,34 +1,18 @@
 import { template } from '../utils/templater/templater'
+import { RafflesService } from '../services/rafflesService'
 
-export class Raffles {
-  private async getRafflsStats() {
-    // 
-  }
+const rafflesService = new RafflesService()
 
-  private async getMyRafflsStats() {
-    // 
-  }
+export class RafflesModel {
+  async rafflesText(): Promise<string> {
+    const data = await rafflesService.getRafflsStats()
 
-  async rafflesText(telegramId: number): Promise<string> {
-    //console.log(telegramId)
-
-    // Request to /api/bot/getUserRafflesStats/:telegramId
-
-    return template('raffles', 'index', {
-      active: 5,
-      history: 95,
-    })
+    return template('raffles', 'index', data)
   }
 
   async myRafflesText(telegramId: number): Promise<string> {
-    //console.log(telegramId)
+    const data = await rafflesService.getMyRafflsStats(telegramId)
 
-    // Request to /api/bot/getUserRafflesStats/:telegramId
-
-    return template('myRaffles', 'index', {
-      current: 2,
-      participated: 15,
-      won: 4,
-    })
+    return template('myRaffles', 'index', data)
   }
 }

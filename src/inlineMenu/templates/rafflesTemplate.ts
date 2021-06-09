@@ -1,18 +1,17 @@
 import { MenuTemplate, createBackMainMenuButtons } from 'telegraf-inline-menu'
 import { Context } from 'telegraf'
-import { template } from '../../../utils/templater/templater'
 import { myRafflesTemplate } from './myRafflesTemplate'
 const { raffles: rafflesButtons } = require('../inlineButtons.json')
-import { Raffles } from '../../../models/rafflesModel'
+import { RafflesModel } from '../../models/rafflesModel'
 
-const RafflesModel = new Raffles()
+const rafflesModel = new RafflesModel()
 
 interface MyContext extends Context {
   readonly match: RegExpExecArray | undefined
 }
 
 const rafflesTemplate = new MenuTemplate<MyContext>(async ctx => {
-  const text = await RafflesModel.rafflesText(ctx.from?.id!)
+  const text = await rafflesModel.rafflesText()
   return { text, parse_mode: 'Markdown' }
 })
 
