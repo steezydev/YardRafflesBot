@@ -5,11 +5,24 @@ export class ApiService {
   private apiToken = ''
   private baseUrl = ''
 
+  /**
+   * Sets variable necessary for api requesting
+   * 
+   * @constructor
+   */
+
   constructor() {
     this.apiToken = process.env.API_TOKEN!
     this.baseUrl = apiConfig.baseUrl
   }
 
+  /**
+   * Request with GET method
+   * 
+   * @param url {string} Request endpoint  
+   * @param params {object} Query params
+   * @returns API response
+   */
   async get(url: string, params: any) {
     try {
       const response = await axios({
@@ -21,12 +34,20 @@ export class ApiService {
         },
       })
 
+
       return response.data
     } catch (err) {
       //console.log(err)
     }
   }
 
+  /**
+   * Request with POST method
+   * 
+   * @param url {string} Request endpoint  
+   * @param data {object} Request body
+   * @returns API response
+   */
   async post(url: string, data: any) {
     try {
       const response = await axios({
@@ -44,6 +65,13 @@ export class ApiService {
     }
   }
 
+  /**
+   * Request with DELETE method
+   * 
+   * @param url {string} Request endpoint  
+   * @param data {object} Request body
+   * @returns API response
+   */
   async delete(url: string, data: any) {
     try {
       const response = await axios({
@@ -61,6 +89,13 @@ export class ApiService {
     }
   }
 
+  /**
+   * Request with PUT method
+   * 
+   * @param url {string} Request endpoint  
+   * @param data {object} Request body
+   * @returns API response
+   */
   async put(url: string, data: any) {
     try {
       const response = await axios({

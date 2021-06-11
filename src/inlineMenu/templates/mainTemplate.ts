@@ -1,32 +1,36 @@
 import { MenuTemplate } from 'telegraf-inline-menu'
 import { Context } from 'telegraf'
-import { template } from '../../utils/templater/templater'
-
+import { MainModel } from '../../models/mainModel'
 import { rafflesTemplate } from './rafflesTemplate'
 import { profileTemplate } from './profileTemplate'
-const { main } = require('../inlineButtons.json')
+import {main as mainButtons} from '../inlineButtons.json'
+
+const mainModel = new MainModel()
 
 interface MyContext extends Context {
   readonly match: RegExpExecArray | undefined
 }
 
-// mock text
-const text = template('menu', 'index', {})
-
-
-const mainTemplate = new MenuTemplate<MyContext>(ctx => {
+const mainTemplate = new MenuTemplate<MyContext>(async ctx => {
+  const text = await mainModel.mainMenuText()
   return { text, parse_mode: 'Markdown' }
 })
 
+// * MAIN MENU BUTTONS *
 
-mainTemplate.submenu(main.raffles.title, main.raffles.callback, rafflesTemplate)
+// Raffles submenu
+mainTemplate.submenu(mainButtons.raffles.title, mainButtons.raffles.callback, rafflesTemplate)
 
-mainTemplate.interact(main.announces.title, main.announces.callback, {
+// Announces list
+mainTemplate.interact(mainButtons.announces.title, mainButtons.announces.callback, {
+  // TODO: Announces list
   do: async ctx => {
     await ctx.answerCbQuery('yaay')
     return false
   }
 })
-mainTemplate.submenu(main.profile.title, main.profile.callback, profileTemplate)
+
+// Profile submenu
+mainTemplate.submenu(mainButtons.profile.title, mainButtons.profile.callback, profileTemplate)
 
 export { mainTemplate }

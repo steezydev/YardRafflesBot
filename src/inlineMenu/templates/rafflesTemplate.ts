@@ -1,8 +1,8 @@
 import { MenuTemplate, createBackMainMenuButtons } from 'telegraf-inline-menu'
 import { Context } from 'telegraf'
 import { myRafflesTemplate } from './myRafflesTemplate'
-const { raffles: rafflesButtons } = require('../inlineButtons.json')
 import { RafflesModel } from '../../models/rafflesModel'
+import {raffles as rafflesButtons} from '../inlineButtons.json'
 
 const rafflesModel = new RafflesModel()
 
@@ -15,17 +15,23 @@ const rafflesTemplate = new MenuTemplate<MyContext>(async ctx => {
   return { text, parse_mode: 'Markdown' }
 })
 
+// * RAFFLES BUTTONS *
 
+// My Raffles button
 rafflesTemplate.submenu(rafflesButtons.my.title, rafflesButtons.my.callback, myRafflesTemplate)
 
+// Active Raffles button
 rafflesTemplate.interact(rafflesButtons.active.title, rafflesButtons.active.callback, {
+  // TODO: Active raffles list
   do: async ctx => {
     await ctx.answerCbQuery('yaay')
     return false
   }
 })
 
+// Raffels History button
 rafflesTemplate.interact(rafflesButtons.history.title, rafflesButtons.history.callback, {
+  // TODO: History raffles list
   joinLastRow: true,
   do: async ctx => {
     await ctx.answerCbQuery('yaay')
@@ -33,8 +39,7 @@ rafflesTemplate.interact(rafflesButtons.history.title, rafflesButtons.history.ca
   }
 })
 
+
 rafflesTemplate.manualRow(createBackMainMenuButtons('↩️', '↩️'))
-
-
 
 export { rafflesTemplate }

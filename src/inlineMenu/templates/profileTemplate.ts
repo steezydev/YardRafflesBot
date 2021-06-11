@@ -1,36 +1,43 @@
 import { MenuTemplate, createBackMainMenuButtons } from 'telegraf-inline-menu'
 import { Context } from 'telegraf'
-import { template } from '../../utils/templater/templater'
+import { ProfileModel } from '../../models/profileModel'
+import { profile as profileButtons } from '../inlineButtons.json'
 
-const { profile } = require('../inlineButtons.json')
+const profileModel = new ProfileModel()
 
 interface MyContext extends Context {
   readonly match: RegExpExecArray | undefined
 }
 
-// mock text
-const text = template('profile', 'index', {})
-
-const profileTemplate = new MenuTemplate<MyContext>(ctx => {
+const profileTemplate = new MenuTemplate<MyContext>(async ctx => {
+  const text = await profileModel.profileMenuText()
   return { text, parse_mode: 'Markdown' }
 })
 
-profileTemplate.interact(profile.statistics.title, profile.statistics.callback, {
+// * PROFILE BUTTONS *
+
+// User statistics
+profileTemplate.interact(profileButtons.statistics.title, profileButtons.statistics.callback, {
+  // TODO: User statistics
   do: async ctx => {
     await ctx.answerCbQuery('yaay')
     return false
   }
 })
 
-profileTemplate.interact(profile.reffs.title, profile.reffs.callback, {
+// User referrals
+profileTemplate.interact(profileButtons.refs.title, profileButtons.refs.callback, {
+  // TODO: User referral stats
   do: async ctx => {
     await ctx.answerCbQuery('yaay')
     return false
   }
 })
 
-profileTemplate.interact(profile.balance.title, profile.balance.callback, {
+// User balance
+profileTemplate.interact(profileButtons.balance.title, profileButtons.balance.callback, {
   joinLastRow: true,
+  // TODO: User balance stats
   do: async ctx => {
     await ctx.answerCbQuery('yaay')
     return false
