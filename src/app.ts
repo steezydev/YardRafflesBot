@@ -22,6 +22,7 @@ const bot = new Telegraf<MyContext>(token)
 bot.use(menuMiddleware)
 bot.hears(keyboardButtons.mainMenu.menu, ctx => menuMiddleware.replyToContext(ctx))
 
+// /start wellcome message
 bot.start(ctx => {
   const text = template('welcome', 'unregistered_wellcome', {
     username: ctx.from.first_name
