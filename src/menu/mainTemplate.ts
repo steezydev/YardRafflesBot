@@ -1,17 +1,14 @@
 import { MenuTemplate } from 'telegraf-inline-menu'
-import { Context } from 'telegraf'
-import { MainModel } from '../../models/mainModel'
+import { MainModel } from '../models/mainModel'
 import { rafflesTemplate } from './rafflesTemplate'
 import { profileTemplate } from './profileTemplate'
-import {main as mainButtons} from '../inlineButtons.json'
+import {main as mainButtons} from '../constants/inlineButtons.json'
+import { SessionContext } from '../context/context'
 
+// Вынести модели в ctx
 const mainModel = new MainModel()
 
-interface MyContext extends Context {
-  readonly match: RegExpExecArray | undefined
-}
-
-const mainTemplate = new MenuTemplate<MyContext>(async ctx => {
+const mainTemplate = new MenuTemplate<SessionContext>(async ctx => {
   const text = await mainModel.mainMenuText()
   return { text, parse_mode: 'Markdown' }
 })

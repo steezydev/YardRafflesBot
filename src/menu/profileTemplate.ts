@@ -1,15 +1,14 @@
 import { MenuTemplate, createBackMainMenuButtons } from 'telegraf-inline-menu'
 import { Context } from 'telegraf'
-import { ProfileModel } from '../../models/profileModel'
-import { profile as profileButtons } from '../inlineButtons.json'
+import { ProfileModel } from '../models/profileModel'
+import { profile as profileButtons } from '../constants/inlineButtons.json'
+import { SessionContext } from '../context/context'
 
 const profileModel = new ProfileModel()
 
-interface MyContext extends Context {
-  readonly match: RegExpExecArray | undefined
-}
 
-const profileTemplate = new MenuTemplate<MyContext>(async ctx => {
+
+const profileTemplate = new MenuTemplate<SessionContext>(async ctx => {
   const text = await profileModel.profileMenuText()
   return { text, parse_mode: 'Markdown' }
 })

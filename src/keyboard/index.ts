@@ -1,5 +1,4 @@
-import { Markup } from 'telegraf'
-const kb = require('./keyboardButtons.json')
+import kb from '../constants/keyboardButtons.json'
 
 export const keyboard = {
   home: [

@@ -1,4 +1,4 @@
-import { template } from '../utils/templater/templater'
+import { template } from '../utils/templater'
 
 export class MainModel {
 

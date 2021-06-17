@@ -1,6 +1,6 @@
 import { MenuMiddleware } from 'telegraf-inline-menu'
 
-import { mainTemplate } from './templates/mainTemplate'
+import { mainTemplate } from './mainTemplate'
 
 const menuMiddleware = new MenuMiddleware('/', mainTemplate)
 

@@ -48,12 +48,13 @@ export class ApiService {
    * @param data {object} Request body
    * @returns API response
    */
-  async post(url: string, data: any) {
+  async post(url: string, data: any, params: any) {
     try {
       const response = await axios({
         method: 'post',
         url: this.baseUrl + url,
         data: data,
+        params: params,
         headers: {
           token: this.apiToken
         },
@@ -61,7 +62,7 @@ export class ApiService {
 
       return response.data
     } catch (err) {
-      //console.log(err)
+      console.log(err)
     }
   }
 
