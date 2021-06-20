@@ -54,6 +54,48 @@ export class RafflesService extends ApiService {
   }
 
   /**
+   * Requests current participated raffles data
+   * 
+   * @param telegramId {number} User's telegram id
+   * @returns Response data with raffle data 
+   */
+   public async getCurrPartRaffles(telegramId: number) {
+    const response = await this.get(`/bot/getCurrPartRaffles`, {
+      telegramId
+    })
+    if (response === undefined) return {}
+    return response.data
+  }
+
+  /**
+   * Requests participated raffles data
+   * 
+   * @param telegramId {number} User's telegram id
+   * @returns Response data with raffle data 
+   */
+   public async getPartRaffles(telegramId: number) {
+    const response = await this.get(`/bot/getParticipatedRaffles`, {
+      telegramId
+    })
+    if (response === undefined) return {}
+    return response.data
+  }
+
+  /**
+   * Requests won raffles data
+   * 
+   * @param telegramId {number} User's telegram id
+   * @returns Response data with raffle data 
+   */
+   public async getWonRaffles(telegramId: number) {
+    const response = await this.get(`/bot/getWonRaffles`, {
+      telegramId
+    })
+    if (response === undefined) return {}
+    return response.data
+  }
+
+  /**
    * Add raffle participation
    * 
    * @param raffleId {number} Raffle id

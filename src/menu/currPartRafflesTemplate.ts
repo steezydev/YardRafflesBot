@@ -10,7 +10,7 @@ const ENTRIES_PER_PAGE = 4
 
 async function getAllEntries(context: SessionContext) {
   // Getting active raffles list
-  const raffles = await rafflesModel.getActiveRaffles(context.from?.id!)
+  const raffles = await rafflesModel.getCurrPartRaffles(context.from?.id!)
 
   /* 
     * Structure
@@ -31,7 +31,7 @@ async function getAllEntries(context: SessionContext) {
 
 // Generating menu body
 async function menuBody(context: SessionContext): Promise<string> {
-  const raffles = await rafflesModel.getActiveRaffles(context.from?.id!)
+  const raffles = await rafflesModel.getCurrPartRaffles(context.from?.id!)
 
   // If no active raffles
   if (Object.keys(raffles).length == 0) {
@@ -40,12 +40,12 @@ async function menuBody(context: SessionContext): Promise<string> {
 
   const allEntries = await getAllEntries(context)
   
-  if (context.session.currentRafflesPage === undefined || Math.ceil(Object.keys(allEntries).length / ENTRIES_PER_PAGE) < context.session.currentRafflesPage) {
-    context.session.currentRafflesPage = 1
+  if (context.session.currPartRafflesPage === undefined || Math.ceil(Object.keys(allEntries).length / ENTRIES_PER_PAGE) < context.session.currPartRafflesPage) {
+    context.session.currPartRafflesPage = 1
   }
 
   const rafflesObj = raffles
-  const pageIndex = (context.session.currentRafflesPage ?? 1) - 1
+  const pageIndex = (context.session.currPartRafflesPage ?? 1) - 1
 
   rafflesObj.length = Object.keys(allEntries).length;
   const currentPageEntries = Array.prototype.slice.call(rafflesObj, pageIndex * ENTRIES_PER_PAGE, (pageIndex + 1) * ENTRIES_PER_PAGE);
@@ -64,7 +64,7 @@ async function menuBody(context: SessionContext): Promise<string> {
   return text
 }
 
-const activeRafflesTemplate = new MenuTemplate<SessionContext>(async context => {
+const currPartRafflesTemplate = new MenuTemplate<SessionContext>(async context => {
   return { text: await menuBody(context), parse_mode: 'Markdown' }
 })
 
@@ -108,10 +108,10 @@ const detailsMenuTemplate = new MenuTemplate<SessionContext>(async ctx => {
 })
 
 // Adding entries menu
-activeRafflesTemplate.chooseIntoSubmenu('details', getAllEntries, detailsMenuTemplate, {
+currPartRafflesTemplate.chooseIntoSubmenu('details', getAllEntries, detailsMenuTemplate, {
   maxRows: 2,
   columns: ENTRIES_PER_PAGE / 2,
-  getCurrentPage: context => context.session.currentRafflesPage
+  getCurrentPage: context => context.session.currPartRafflesPage
 })
 
 // Particiaption button
@@ -136,23 +136,23 @@ async function getCustomPaginationButtons(context: any) {
     return []
   }
 
-  if (context.session.currentRafflesPage === 1) {
-    return [[{ text: '▶️', relativePath: `custom-pagination:${context.session.currentRafflesPage + 1}` }]]
+  if (context.session.currPartRafflesPage === 1) {
+    return [[{ text: '▶️', relativePath: `custom-pagination:${context.session.currPartRafflesPage + 1}` }]]
   }
-  if (context.session.currentRafflesPage === Math.ceil(Object.keys(allEntries).length / ENTRIES_PER_PAGE)) {
-    return [[{ text: '◀️', relativePath: `custom-pagination:${context.session.currentRafflesPage - 1}` }]]
+  if (context.session.currPartRafflesPage === Math.ceil(Object.keys(allEntries).length / ENTRIES_PER_PAGE)) {
+    return [[{ text: '◀️', relativePath: `custom-pagination:${context.session.currPartRafflesPage - 1}` }]]
   }
-  return [[{ text: '◀️', relativePath: `custom-pagination:${context.session.currentRafflesPage - 1}` }, { text: '▶️', relativePath: `custom-pagination:${context.session.currentRafflesPage + 1}` }]]
+  return [[{ text: '◀️', relativePath: `custom-pagination:${context.session.currPartRafflesPage - 1}` }, { text: '▶️', relativePath: `custom-pagination:${context.session.currPartRafflesPage + 1}` }]]
 }
 
 // Custom pagination
-activeRafflesTemplate.manualRow(getCustomPaginationButtons)
-activeRafflesTemplate.manualAction(/custom-pagination:(\d+)$/, (context, path) => {
-  context.session.currentRafflesPage = parseInt(context.match![1])
+currPartRafflesTemplate.manualRow(getCustomPaginationButtons)
+currPartRafflesTemplate.manualAction(/custom-pagination:(\d+)$/, (context, path) => {
+  context.session.currPartRafflesPage = parseInt(context.match![1])
   return '.'
 })
 
 
-activeRafflesTemplate.manualRow(createBackMainMenuButtons('🔙 Назад', ''))
+currPartRafflesTemplate.manualRow(createBackMainMenuButtons('🔙 Назад', ''))
 
-export { activeRafflesTemplate }
+export { currPartRafflesTemplate }

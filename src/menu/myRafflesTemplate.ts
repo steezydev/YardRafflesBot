@@ -4,6 +4,10 @@ import { RafflesModel } from '../models/rafflesModel'
 import { myRaffles as myrafflesButtons } from '../constants/inlineButtons.json'
 import { SessionContext } from '../context/context'
 
+import { participatedRafflesTemplate } from './participatedRafflesTemplate';
+import { wonRafflesTemplate } from './wonRafflesTemplate';
+import { currPartRafflesTemplate } from './currPartRafflesTemplate'
+
 const rafflesModel = new RafflesModel()
 
 
@@ -15,31 +19,15 @@ const myRafflesTemplate = new MenuTemplate<SessionContext>(async ctx => {
 // * MY RAFFLES BUTTONS *
 
 // Active raffles user takes part in
-myRafflesTemplate.interact(myrafflesButtons.active.title, myrafflesButtons.active.callback, {
-  // TODO: User active raffles list
-  do: async ctx => {
-    await ctx.answerCbQuery('message')
-    return false
-  }
-})
+myRafflesTemplate.submenu(myrafflesButtons.active.title, myrafflesButtons.active.callback, currPartRafflesTemplate)
 
 // Raffles user took part in
-myRafflesTemplate.interact(myrafflesButtons.participated.title, myrafflesButtons.participated.callback, {
-  // TODO: Raffles user took part in list
-  do: async ctx => {
-    await ctx.answerCbQuery('message')
-    return false
-  }
-})
+myRafflesTemplate.submenu(myrafflesButtons.participated.title, myrafflesButtons.participated.callback, participatedRafflesTemplate)
+
 
 // Raffles user won
-myRafflesTemplate.interact(myrafflesButtons.won.title, myrafflesButtons.won.callback, {
-  joinLastRow: true,
-  // TODO: Raffles user won list
-  do: async ctx => {
-    await ctx.answerCbQuery('yaay')
-    return false
-  }
+myRafflesTemplate.submenu(myrafflesButtons.won.title, myrafflesButtons.won.callback, wonRafflesTemplate, {
+  joinLastRow: true
 })
 
 myRafflesTemplate.manualRow(createBackMainMenuButtons('↩️', 'Главное меню 🗄'))

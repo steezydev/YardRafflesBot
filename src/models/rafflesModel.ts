@@ -18,6 +18,8 @@ interface RaffleEntity {
   status: number;
   profit: string;
   userStatus: number;
+  closed: number;
+  successHash: string
 }
 
 export class RafflesModel {
@@ -69,6 +71,50 @@ export class RafflesModel {
     return raffles
   }
 
+  /** 
+   * Gets Current Participated Raffles
+   * 
+   * @param telegramId {number} User's telegram id
+   * @returns Raffles object
+   * */
+   async getCurrPartRaffles(telegramId: number): Promise<RaffleEntity[]> {
+    const raffles = await rafflesService.getCurrPartRaffles(telegramId)
+
+    return raffles
+  }
+
+  /** 
+   * Gets Participated Raffles
+   * 
+   * @param telegramId {number} User's telegram id
+   * @returns Raffles object
+   * */
+  async getPartRaffles(telegramId: number): Promise<RaffleEntity[]> {
+    const raffles = await rafflesService.getPartRaffles(telegramId)
+
+    return raffles
+  }
+
+  /** 
+   * Gets won Raffles
+   * 
+   * @param telegramId {number} User's telegram id
+   * @returns Raffles object
+   * */
+  async getWonRaffles(telegramId: number): Promise<RaffleEntity[]> {
+    const raffles = await rafflesService.getWonRaffles(telegramId)
+
+    return raffles
+  }
+
+  /** 
+   * Set raffle participation
+   * 
+   * @param status {boolean} true - add; false - remove
+   * @param raffleId {number} Raffle id
+   * @param telegramId {number} User's telegram id
+   * @returns Raffles object
+   * */
   async setRartRaffle(status: boolean, raffleId: number, telegramId: number) {
     if (status) {
       return await this.addPartRaffle(raffleId, telegramId)

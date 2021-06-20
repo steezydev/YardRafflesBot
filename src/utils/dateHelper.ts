@@ -18,3 +18,10 @@ export function dateFormatter(time: string): string {
 
   return resDt + '.' + resMonth + '.' + year
 }
+
+export function isDateExpired(time: string): boolean {
+  const targetDate = new Date(time)
+  const currentDate = new Date()
+
+  return targetDate < currentDate
+}
