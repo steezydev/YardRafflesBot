@@ -2,7 +2,7 @@ import { MenuTemplate, createBackMainMenuButtons } from 'telegraf-inline-menu'
 import { SessionContext } from '../context/context'
 import { RafflesModel } from '../models/rafflesModel'
 import { dateFormatter, isDateExpired } from '../utils/dateHelper'
-import { QRCodeGen } from '../utils/qrCodeGenerator'
+import { QRCodeGen } from '../utils/QRCodeGenerator'
 
 const rafflesModel = new RafflesModel()
 const QRCodeModel = new QRCodeGen()
@@ -94,7 +94,7 @@ const detailsMenuTemplate = new MenuTemplate<SessionContext>(async ctx => {
 
   const QRCode = await QRCodeModel.makeSuccessQRCode(raffle.successHash)
 
-  let text = `*QR код*`
+  let text = `🧾 QR код для *${raffle.work_name}*`
 
   return {
     type: 'photo',
