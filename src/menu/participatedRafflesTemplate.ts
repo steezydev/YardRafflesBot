@@ -28,7 +28,7 @@ async function menuBody(context: SessionContext): Promise<string> {
 
   // If no active raffles
   if (Object.keys(raffles).length == 0) {
-    return '*Активных раффлов на данный момент нету*'
+    return '*Вы пока не участвовали ни в одном раффле*'
   }
 
   const allEntries = await getAllEntries(context)

@@ -30,6 +30,6 @@ myRafflesTemplate.submenu(myrafflesButtons.won.title, myrafflesButtons.won.callb
   joinLastRow: true
 })
 
-myRafflesTemplate.manualRow(createBackMainMenuButtons('↩️', 'Главное меню 🗄'))
+myRafflesTemplate.manualRow(createBackMainMenuButtons('↩️', ''))
 
 export { myRafflesTemplate }

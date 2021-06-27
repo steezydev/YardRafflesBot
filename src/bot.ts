@@ -1,8 +1,8 @@
-import { Markup, Scenes, Context, Telegraf } from 'telegraf'
+import { Telegraf, Scenes } from 'telegraf'
 import { SessionContext } from './context/context'
-import { template } from './utils/templater'
-import { keyboard, keyboardButtons } from './keyboard'
+import { keyboardButtons } from './keyboard'
 import { menuMiddleware } from './menu'
+import { authWizard } from './scenes/authScene'
 
 import { Db } from 'mongodb'
 import { session } from 'telegraf-session-mongodb'
@@ -15,23 +15,17 @@ if (token === undefined) {
 const bot = new Telegraf<SessionContext>(token)
 
 export const setup = (db: Db) => {
-  bot.use(session(db));
+  const stage = new Scenes.Stage([authWizard])
+
+  bot.use(session(db))
+  bot.use(stage.middleware())
 
   // * MENU DECLARATION *
   bot.use(menuMiddleware)
   bot.hears(keyboardButtons.mainMenu.menu, ctx => menuMiddleware.replyToContext(ctx))
 
-  // /start wellcome message
-  bot.start(ctx => {
-    const text = template('welcome', 'unregistered_wellcome', {
-      username: ctx.from.first_name
-    })
-
-    return ctx.reply(text, Markup
-      .keyboard(keyboard.home)
-      .oneTime()
-      .resize())
-  })
+  // /start
+  bot.start(ctx => ctx.scene.enter('auth-wizard'));
 
   return bot
 }

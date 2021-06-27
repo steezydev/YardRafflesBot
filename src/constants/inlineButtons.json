@@ -16,29 +16,29 @@
   "raffles": {
     "my": {
       "title": "Мои раффлы 💼",
-      "callback": "my_raffles"
+      "callback": "my"
     },
     "active": {
       "title": "Активные ⏱",
-      "callback": "active_raffles"
+      "callback": "active"
     },
     "history": {
       "title": "История 🗂",
-      "callback": "history_raffles"
+      "callback": "history"
     }
   },
   "myRaffles": {
     "active": {
       "title": "Текущие раффлы 🗓",
-      "callback": "current_raffles"
+      "callback": "current"
     },
     "participated": {
       "title": "Участвовал 📍",
-      "callback": "participated_raffles"
+      "callback": "participated"
     },
     "won": {
       "title": "Выиграл 🏆",
-      "callback": "won_raffles"
+      "callback": "won"
     }
   },
   "profile": {

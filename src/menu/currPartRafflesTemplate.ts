@@ -27,15 +27,13 @@ async function getAllEntries(context: SessionContext) {
   return entries
 }
 
-
-
 // Generating menu body
 async function menuBody(context: SessionContext): Promise<string> {
   const raffles = await rafflesModel.getCurrPartRaffles(context.from?.id!)
 
   // If no active raffles
   if (Object.keys(raffles).length == 0) {
-    return '*Активных раффлов на данный момент нету*'
+    return '*Вы не зарегистрировались ни на один из активных рааффлов*'
   }
 
   const allEntries = await getAllEntries(context)

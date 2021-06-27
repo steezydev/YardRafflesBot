@@ -27,8 +27,6 @@ async function getAllEntries(context: SessionContext) {
   return entries
 }
 
-
-
 // Generating menu body
 async function menuBody(context: SessionContext): Promise<string> {
   const raffles = await rafflesModel.getActiveRaffles(context.from?.id!)
