@@ -12,10 +12,6 @@ async function getAllEntries(context: SessionContext) {
   // Getting active raffles list
   const raffles = await rafflesModel.getActiveRaffles(context.from?.id!)
 
-  /* 
-    * Structure
-    * id {raffle id}: 'Work name'
-    */
   const entries: Record<string, string> = {}
 
   // Generating entries
@@ -71,10 +67,8 @@ const detailsMenuTemplate = new MenuTemplate<SessionContext>(async ctx => {
   // Getting raffle id
   const id = parseInt(ctx.match![1].slice(2))
 
-  // Setting current opened raffle id into session
   ctx.session.currentRafflesId = id
 
-  // Getting raffle via API
   const raffle = await rafflesModel.getRaffle(id, ctx.from?.id!)
 
   ctx.session.currentRafflesStatus = raffle.userStatus ? true : false
@@ -121,6 +115,8 @@ detailsMenuTemplate.toggle('Участвую', 'raffle_reg', {
     ctx.session.currentRafflesStatus = newState
     return true
   },
+  
+  formatState: (context, text, state) => `${state ? '🚫 Не участвую' : '✅ Участвую'}`,
   isSet: (ctx) => ctx.session.currentRafflesStatus
 })
 

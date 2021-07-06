@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { apiConfig } from '../config/apiConfig'
 
 export class ApiService {
-  private apiToken = ''
-  private baseUrl = ''
+  private apiToken: string
+  private baseUrl: string
 
   /**
    * Sets variable necessary for api requesting
@@ -13,7 +12,7 @@ export class ApiService {
 
   constructor() {
     this.apiToken = process.env.API_TOKEN!
-    this.baseUrl = apiConfig.baseUrl
+    this.baseUrl = process.env.API_URI!
   }
 
   /**
@@ -32,12 +31,18 @@ export class ApiService {
         headers: {
           token: this.apiToken
         },
+        validateStatus: function (status) {
+          return status < 500; // Resolve only if the status code is less than 500
+        }
       })
-
 
       return response.data
     } catch (err) {
-      //console.log(err)
+      if (err.response) {
+        return {}
+      }
+
+      throw new Error(err)
     }
   }
 
@@ -58,11 +63,19 @@ export class ApiService {
         headers: {
           token: this.apiToken
         },
+        validateStatus: function (status) {
+          return status < 500; // Resolve only if the status code is less than 500
+        }
       })
+
 
       return response.data
     } catch (err) {
-      console.log(err)
+      if (err.response) {
+        return {}
+      }
+
+      throw new Error(err)
     }
   }
 
@@ -73,20 +86,28 @@ export class ApiService {
    * @param data {object} Request body
    * @returns API response
    */
-  async delete(url: string, data: any) {
+  async delete(url: string, data: any, params: any) {
     try {
       const response = await axios({
         method: 'delete',
         url: this.baseUrl + url,
         data: data,
+        params: params,
         headers: {
           token: this.apiToken
         },
+        validateStatus: function (status) {
+          return status < 500; // Resolve only if the status code is less than 500
+        }
       })
 
       return response.data
     } catch (err) {
-      //console.log(err)
+      if (err.response) {
+        return {}
+      }
+
+      throw new Error(err)
     }
   }
 
@@ -97,20 +118,29 @@ export class ApiService {
    * @param data {object} Request body
    * @returns API response
    */
-  async put(url: string, data: any) {
+  async put(url: string, data: any, params: any) {
     try {
       const response = await axios({
         method: 'put',
         url: this.baseUrl + url,
         data: data,
+        params: params,
         headers: {
           token: this.apiToken
         },
+        validateStatus: function (status) {
+          return status < 500; // Resolve only if the status code is less than 500
+        }
       })
+
 
       return response.data
     } catch (err) {
-      //console.log(err)
+      if (err.response) {
+        return {}
+      }
+
+      throw new Error(err)
     }
   }
 }

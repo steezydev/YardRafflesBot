@@ -1,4 +1,5 @@
 import { ApiService } from './apiService'
+import * as url from '../constants/endpoints'
 
 interface UserData {
   telegramId: number
@@ -15,8 +16,11 @@ export class UserService extends ApiService {
    * @returns Response with user data
    */
   public async getUser(telegramId: number): Promise<object> {
-    const response = await this.get(`/bot/getUser/${telegramId}`, {})
-    if (response === undefined) return {}
+    const response = await this.get(url.GET_USER + telegramId, {})
+    
+    if (response === undefined) {
+      return {}
+    }
 
     return response.data
   }
@@ -27,7 +31,7 @@ export class UserService extends ApiService {
    * @returns True or false
    */
    public async checkPhoneNumber(phone: string): Promise<boolean> {
-    const response = await this.get(`/bot/checkPhone`, {
+    const response = await this.get(url.CHECK_PHONE, {
       phone
     })
     if (response === undefined) return true
@@ -41,8 +45,8 @@ export class UserService extends ApiService {
    * @returns User data
    */
    public async addUser(userData: UserData): Promise<object> {
-    const response = await this.post(`/bot/addUser`, userData, {})
-    if (response === undefined) return {}
+    const response = await this.post(url.ADD_USER, userData, {})
+    
 
     return response.data
   }

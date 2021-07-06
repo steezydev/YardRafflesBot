@@ -1,5 +1,5 @@
 import { Composer, Scenes, Markup } from 'telegraf'
-import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
+import { isValidPhoneNumber, parsePhoneNumberWithError, ParseError, PhoneNumber } from 'libphonenumber-js'
 import { SessionContext } from '../context/context'
 import { keyboard } from '../keyboard'
 import { template } from '../utils/templater'
@@ -7,13 +7,33 @@ import { UserModel } from '../models/userModel'
 
 const userModel = new UserModel()
 
+// HELPER
+function getPhoneNumber(phone: string): PhoneNumber | undefined {
+  try {
+    const phoneNumber = parsePhoneNumberWithError(phone, 'RU')
+
+    if (!isValidPhoneNumber(phone, 'RU')) {
+      return undefined
+    }
+
+    return phoneNumber
+  } catch (err) {
+    if (err instanceof ParseError) {
+      return undefined
+    } else {
+      throw err
+    }
+  }
+}
+
 const getPhoneNumberStep = new Composer<SessionContext>()
 getPhoneNumberStep.on('text', async (ctx) => {
   // Получем номер телефона из сообщения
   const phone = ctx.message.text
-  const phoneNumber = parsePhoneNumber(phone, 'RU')
 
-  if (!isValidPhoneNumber(phone, 'RU')) {
+  const phoneNumber = getPhoneNumber(phone)
+
+  if (phoneNumber === undefined) {
     ctx.reply('❗️Введите действительный номер телефона❗️')
     await ctx.reply('📞 Ваш номер телефона: ')
     return

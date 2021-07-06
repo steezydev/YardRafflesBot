@@ -148,4 +148,30 @@ export class RafflesModel {
 
     return status
   }
+
+  /** 
+   * Confirm success participation
+   * 
+   * @param raffleId {number} Raffle id
+   * @param telegramId {number} User's telegram id
+   * @returns status (1, 0)
+   * */
+   async confirmSuccess(raffleId: number, telegramId: number): Promise<boolean> {
+    const status = await rafflesService.confirmSuccess(raffleId, telegramId)
+
+    return status
+  }
+
+  /** 
+   * Confirm loss participation
+   * 
+   * @param raffleId {number} Raffle id
+   * @param telegramId {number} User's telegram id
+   * @returns status (1, 0)
+   * */
+   async confirmLoss(raffleId: number, telegramId: number): Promise<boolean> {
+    const status = await rafflesService.confirmLoss(raffleId, telegramId)
+
+    return status
+  }
 }
