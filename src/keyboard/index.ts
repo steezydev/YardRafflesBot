@@ -2,7 +2,9 @@ import kb from '../constants/keyboardButtons.json'
 
 export const keyboard = {
   home: [
-    [kb.mainMenu.menu, kb.mainMenu.about],
+    [kb.mainMenu.raffles],
+    [kb.mainMenu.announces, kb.mainMenu.profile],
+    [kb.mainMenu.about]
   ],
 }
 

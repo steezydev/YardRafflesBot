@@ -39,8 +39,8 @@ export class UserModel {
    * 
    * @returns True or false
    * */
-  async addUser(userData: UserData): Promise<object> {
-    const user = await userService.addUser(userData)
+  async addUser(userData: UserData, reffHash: string): Promise<object> {
+    const user = await userService.addUser(userData, reffHash)
 
     return user
   }

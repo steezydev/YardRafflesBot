@@ -5,6 +5,18 @@ import { keyboard } from '../keyboard'
 import { template } from '../utils/templater'
 import { UserModel } from '../models/userModel'
 
+type PropOr<T, P extends string | symbol | number, D> = T extends Partial<Record<P, infer V>> ? V : D
+
+type UnionKeys<T> = T extends unknown ? keyof T : never
+
+type Deunionize<T> = ([undefined] extends [T] ? undefined : never) | {
+  [K in UnionKeys<T>]: PropOr<NonNullable<T>, K, undefined>
+}
+
+function deunionize<T extends object | undefined>(t: T) {
+  return t as Deunionize<T>
+}
+
 const userModel = new UserModel()
 
 // HELPER
@@ -47,12 +59,15 @@ getPhoneNumberStep.on('text', async (ctx) => {
     return
   }
 
-  const user = await userModel.addUser({
-    telegramId: ctx.from.id,
-    username: ctx.from.first_name,
-    telegramLink: ctx.from.username,
-    phone: phoneNumber.number.toString()
-  })
+  const user = await userModel.addUser(
+    {
+      telegramId: ctx.from.id,
+      username: ctx.from.first_name,
+      telegramLink: ctx.from.username,
+      phone: phoneNumber.number.toString()
+    },
+    ctx.session.reffHash.toString()
+  )
 
   if (user === {}) {
     ctx.reply('❗️Что-то пошло не так❗️')
@@ -74,6 +89,13 @@ getPhoneNumberStep.use((ctx) =>
 export const authWizard = new Scenes.WizardScene(
   'auth-wizard',
   async (ctx) => {
+    // Referal hash
+    const startPayload = deunionize(ctx.message)?.text!.toLowerCase()
+    const reffHash = startPayload!.split(' ')[1]
+    ctx.session.reffHash = reffHash
+
+    console.log(ctx.session.reffHash)
+
     // Проверка пользователя в БД
     const userExists = await userModel.checkUserExists(ctx.from?.id!)
 
