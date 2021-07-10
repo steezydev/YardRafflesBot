@@ -17,7 +17,7 @@ export class UserService extends ApiService {
    */
   public async getUser(telegramId: number): Promise<object> {
     const response = await this.get(url.GET_USER + telegramId, {})
-    
+
     if (response === undefined) {
       return {}
     }
@@ -30,7 +30,7 @@ export class UserService extends ApiService {
    * 
    * @returns True or false
    */
-   public async checkPhoneNumber(phone: string): Promise<boolean> {
+  public async checkPhoneNumber(phone: string): Promise<boolean> {
     const response = await this.get(url.CHECK_PHONE, {
       phone
     })
@@ -44,9 +44,8 @@ export class UserService extends ApiService {
    * 
    * @returns User data
    */
-   public async addUser(userData: UserData): Promise<object> {
-    const response = await this.post(url.ADD_USER, userData, {})
-    
+  public async addUser(userData: UserData, refHash: string): Promise<object> {
+    const response = await this.post(url.ADD_USER, userData, refHash !== undefined ? { refHash } : {})
 
     return response.data
   }

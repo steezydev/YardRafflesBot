@@ -1,8 +1,9 @@
 import { Telegraf, Scenes } from 'telegraf'
 import { SessionContext } from './context/context'
 import { keyboardButtons } from './keyboard'
-import { menuMiddleware } from './menu'
+import { rafflesMenu, profileMenu } from './menu'
 import { authWizard } from './scenes/authScene'
+
 
 import { Db } from 'mongodb'
 import { session } from 'telegraf-session-mongodb'
@@ -21,11 +22,20 @@ export const setup = (db: Db) => {
   bot.use(stage.middleware())
 
   // * MENU DECLARATION *
-  bot.use(menuMiddleware)
-  bot.hears(keyboardButtons.mainMenu.menu, ctx => menuMiddleware.replyToContext(ctx))
-
-  // /start
+  bot.use(rafflesMenu)
+  bot.use(profileMenu)
+  
   bot.start(ctx => ctx.scene.enter('auth-wizard'));
+
+  /*
+  bot.hears('/start', (ctx) => {
+    const reffHash = ctx.match[1]
+
+  })*/
+
+  bot.command('raffles', (ctx) => rafflesMenu.replyToContext(ctx))
+
+  bot.command('profile', (ctx) => profileMenu.replyToContext(ctx))
 
   return bot
 }

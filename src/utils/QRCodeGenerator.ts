@@ -1,9 +1,15 @@
 import QRCode from 'qrcode'
 
+
 export class QRCodeGen {
   async makeQRCode(hash: string) {
     try {
-      const code = await QRCode.toDataURL(hash)
+      const code = await QRCode.toDataURL(
+        hash,
+        {
+          scale: 10
+        }
+      )
       return code.split(',')[1]
     } catch (err) {
       throw new Error(err)
