@@ -22,8 +22,9 @@ export const setup = (db: Db) => {
   bot.use(stage.middleware())
 
   // * MENU DECLARATION *
-  bot.use(rafflesMenu)
+
   bot.use(profileMenu)
+  bot.use(rafflesMenu)
   
   bot.start(ctx => ctx.scene.enter('auth-wizard'));
 

@@ -4,6 +4,7 @@ import { rafflesTemplate } from './rafflesTemplate'
 import { profileTemplate } from './profileTemplate'
 
 //export const menuMiddleware = new MenuMiddleware('/', mainTemplate)
-export const rafflesMenu = new MenuMiddleware('/', rafflesTemplate)
-export const profileMenu = new MenuMiddleware('/', profileTemplate)
+
+export const profileMenu = new MenuMiddleware('profile/', profileTemplate)
+export const rafflesMenu = new MenuMiddleware('raffles/', rafflesTemplate)
 
