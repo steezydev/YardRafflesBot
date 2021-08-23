@@ -76,10 +76,8 @@ getPhoneNumberStep.on('text', async (ctx) => {
   }
 
   // Если все хорошо, то сообщеняем пользователю, отправляем клавиатуру и выходим из сцены
-  await ctx.reply('Поздравляю, регистрация прошла успешно!', Markup
-    .keyboard(keyboard.home)
-    .oneTime()
-    .resize())
+  await ctx.reply('Поздравляю, регистрация прошла успешно!')
+  await ctx.reply(`Чтобы начать работу с ботом, воспользуйтесь командами`)
   return await ctx.scene.leave()
 })
 getPhoneNumberStep.use((ctx) =>
@@ -101,10 +99,8 @@ export const authWizard = new Scenes.WizardScene(
 
     // Если пользователь существет, выходим из сцены
     if (userExists) {
-      await ctx.reply(`Добро пожаловать назад, ${ctx.from!.first_name}`, Markup
-        .keyboard(keyboard.home)
-        .oneTime()
-        .resize())
+      await ctx.reply(`Добро пожаловать назад, ${ctx.from!.first_name}`)
+      await ctx.reply(`Чтобы начать работу с ботом, воспользуйтесь командами`)
       return await ctx.scene.leave()
     }
 
