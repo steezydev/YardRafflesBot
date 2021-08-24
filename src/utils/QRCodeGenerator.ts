@@ -7,13 +7,18 @@ export class QRCodeGen {
       const code = await QRCode.toDataURL(
         hash,
         {
-          scale: 10
+          scale: 8
         }
       )
       return code.split(',')[1]
     } catch (err) {
       throw new Error(err)
     }
+  }
+
+  async makeReferralQRCode(hash: string) {
+    const inviteUrl = process.env.BOT_INVITE_URL
+    return await this.makeQRCode(inviteUrl + '?start=' + hash)
   }
 
   async makeSuccessQRCode(hash: string) {

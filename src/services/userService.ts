@@ -15,7 +15,7 @@ export class UserService extends ApiService {
    * 
    * @returns Response with user data
    */
-  public async getUser(telegramId: number): Promise<object> {
+  public async getUser(telegramId: number) {
     const response = await this.get(url.GET_USER + telegramId, {})
 
     if (response === undefined) {
