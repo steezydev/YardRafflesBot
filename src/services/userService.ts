@@ -45,7 +45,7 @@ export class UserService extends ApiService {
    * @returns User data
    */
   public async addUser(userData: UserData, refHash: string): Promise<object> {
-    const response = await this.post(url.ADD_USER, userData, refHash !== undefined ? { refHash } : {})
+    const response = await this.post(url.ADD_USER, userData, (refHash !== undefined ? { refHash } : {}))
 
     return response.data
   }
