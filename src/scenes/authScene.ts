@@ -93,8 +93,6 @@ export const authWizard = new Scenes.WizardScene(
 
     ctx.session.reffHash = reffHash
 
-    console.log(ctx.session.reffHash)
-
     // Проверка пользователя в БД
     const userExists = await userModel.checkUserExists(ctx.from?.id!)
 

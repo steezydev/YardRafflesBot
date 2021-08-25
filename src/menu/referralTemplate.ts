@@ -11,11 +11,13 @@ const referralTemplate = new MenuTemplate<SessionContext>(async context => {
     const user = await userModel.getUser(context.from?.id!)
     const refLink = process.env.BOT_INVITE_URL + '?start=' + user.refHash
     const refs = 0
+
     const text = `У вас *${refs}* рефералов\n\nВаша реферальная ссылка:\n${refLink}`
 
     return {
         text,
-        parse_mode: 'Markdown'
+        parse_mode: 'Markdown',
+        disable_web_page_preview: true
     }
 })
 
@@ -35,7 +37,7 @@ const referralQRTemplate = new MenuTemplate<SessionContext>(async context => {
     }
 })
 
-referralTemplate.submenu('🧾Получить QR код', 'getRefQR', referralQRTemplate)
+referralTemplate.submenu('🧾Показать QR код', 'getRefQR', referralQRTemplate)
 
 referralQRTemplate.manualRow(createBackMainMenuButtons('🔙 Назад', ''))
 referralTemplate.manualRow(createBackMainMenuButtons('🔙 Назад', ''))
