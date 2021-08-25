@@ -66,7 +66,7 @@ getPhoneNumberStep.on('text', async (ctx) => {
       telegramLink: ctx.from.username,
       phone: phoneNumber.number.toString()
     },
-    ctx.session.reffHash.toString()
+    ctx.session.reffHash
   )
 
   if (user === {}) {
@@ -90,6 +90,7 @@ export const authWizard = new Scenes.WizardScene(
     // Referal hash
     const startPayload = deunionize(ctx.message)?.text!.toLowerCase()
     const reffHash = startPayload!.split(' ')[1]
+
     ctx.session.reffHash = reffHash
 
     console.log(ctx.session.reffHash)
