@@ -9,10 +9,19 @@ const userModel = new UserModel()
 
 const referralTemplate = new MenuTemplate<SessionContext>(async context => {
     const user = await userModel.getUser(context.from?.id!)
+    const refCount = await userModel.getRefCount(context.from?.id!)
     const refLink = process.env.BOT_INVITE_URL + '?start=' + user.refHash
     const refs = 0
 
-    const text = `У вас *${refs}* рефералов\n\nВаша реферальная ссылка:\n${refLink}`
+    if (refCount == null) {
+        return {
+            text: 'Произошла ошибка!'
+        }
+    }
+
+    const text = `*Количество ваших рефералов*\n_🔹1-ого уровня:_ ${refCount.firstLevel}\n_🔹2-ого уровня:_ ${refCount.secondLevel}\n_🔹3-ого уровня:_ ${refCount.thirdLevel}\n\nВаша реферальная ссылка:\n${refLink}`
+
+    //const text = `У вас *${refs}* рефералов\n\nВаша реферальная ссылка:\n${refLink}`
 
     return {
         text,

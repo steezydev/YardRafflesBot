@@ -8,6 +8,12 @@ interface UserData {
   phone: string
 }
 
+interface RefCount {
+  firstLevel: number,
+  secondLevel: number,
+  thirdLevel: number,
+}
+
 export class UserService extends ApiService {
 
   /**
@@ -46,6 +52,20 @@ export class UserService extends ApiService {
    */
   public async addUser(userData: UserData, refHash: string): Promise<object> {
     const response = await this.post(url.ADD_USER, userData, (refHash !== undefined ? { refHash } : {}))
+
+    return response.data
+  }
+
+  /**
+   * Checks for phone number
+   * 
+   * @returns True or false
+   */
+   public async getRefCount(telegramId: number): Promise<RefCount | null>  {
+    const response = await this.get(url.GET_REF_COUNT + telegramId, {})
+    if (response === undefined) {
+      return null
+    }
 
     return response.data
   }

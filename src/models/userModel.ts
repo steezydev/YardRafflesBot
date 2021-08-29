@@ -27,6 +27,12 @@ interface UserEntity {
   updatedAt: string
 }
 
+interface RefCount {
+  firstLevel: number,
+  secondLevel: number,
+  thirdLevel: number,
+}
+
 export class UserModel {
 
   /** 
@@ -71,5 +77,16 @@ export class UserModel {
     const user = await userService.addUser(userData, reffHash)
 
     return user
+  }
+
+  /** 
+   * Gets number of user's referrals for 3 levels of hierarchy
+   * 
+   * @returns object
+   * */
+   async getRefCount(telegramId: number): Promise<RefCount | null> {
+    const refCount = await userService.getRefCount(telegramId)
+
+    return refCount
   }
 }
