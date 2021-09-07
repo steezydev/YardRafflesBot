@@ -18,10 +18,7 @@ const referralTemplate = new MenuTemplate<SessionContext>(async context => {
             text: 'Произошла ошибка!'
         }
     }
-
     const text = `*Количество ваших рефералов*\n_🔹1-ого уровня:_ ${refCount.firstLevel}\n_🔹2-ого уровня:_ ${refCount.secondLevel}\n_🔹3-ого уровня:_ ${refCount.thirdLevel}\n\nВаша реферальная ссылка:\n${refLink}`
-
-    //const text = `У вас *${refs}* рефералов\n\nВаша реферальная ссылка:\n${refLink}`
 
     return {
         text,

@@ -3,6 +3,7 @@ import { SessionContext } from './context/context'
 import { keyboardButtons } from './keyboard'
 import { rafflesMenu, profileMenu } from './menu'
 import { authWizard } from './scenes/authScene'
+import { authMiddleware } from './middleware/authMiddleware'
 
 
 import { Db } from 'mongodb'
@@ -22,6 +23,7 @@ export const setup = (db: Db) => {
   bot.use(stage.middleware())
 
   // * MENU DECLARATION *
+  bot.use(authMiddleware)
 
   bot.use(profileMenu)
   bot.use(rafflesMenu)

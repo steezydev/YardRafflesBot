@@ -37,7 +37,7 @@ export class ApiService {
       })
 
       return response.data
-    } catch (err) {
+    } catch (err: any) {
       if (err.response) {
         return {}
       }
@@ -70,7 +70,7 @@ export class ApiService {
 
 
       return response.data
-    } catch (err) {
+    } catch (err: any) {
       if (err.response) {
         return {}
       }
@@ -102,7 +102,7 @@ export class ApiService {
       })
 
       return response.data
-    } catch (err) {
+    } catch (err: any) {
       if (err.response) {
         return {}
       }
@@ -135,7 +135,7 @@ export class ApiService {
 
 
       return response.data
-    } catch (err) {
+    } catch (err: any) {
       if (err.response) {
         return {}
       }
