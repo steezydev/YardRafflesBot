@@ -3,8 +3,6 @@
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
 
-![swag](https://forthebadge.com/images/badges/built-with-swag.svg)
-
 > YardBot is a telegram bot and part of **YardRaffles** project. It was created to give users easy and native experience using YardRaffles system.
 
 # About
